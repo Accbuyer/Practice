@@ -8,63 +8,73 @@
 5) Создать список из 100 рандомных Boolean (Random.nextBoolean()). Отфильтровать 'true' и вывести в консоль количество таковых
  */
 
+package day1;
 
-
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class day1 {
+public class DoWork {
+    public static List<Integer> doFirst(List<Integer> list) {
 
+        return list.stream().filter(x -> x % 5 == 0).collect(Collectors.toList());
+    }
 
-    public static void main(String[] args) {
+    public static void doSecond(List<Integer> list) {
 
-    Random rnd = new Random();
-    List<Integer> list = new ArrayList<>();
+        Optional<Integer> optional = list.stream().filter(x -> x == 100).findAny();
 
-    for(int i = 0; i < 100; i++){
+        if (optional.isEmpty()) {
+            System.out.println("Число не найдено");
+        }
+    }
 
-        list.add(rnd.nextInt(1001));
+    public static void doThird(List<Integer> list) {
 
+        Optional<Integer> optional = list.stream().filter(x -> x == 100).findFirst();
+
+        if (optional.isEmpty()) {
+            System.out.println("Число не найдено");
+        }
 
     }
-        ///////////////////1///////////////////////
-        System.out.println(list.stream().filter(x -> x % 5 == 0).collect(Collectors.toList()));
 
+    public static List<String> doFourth() {
+        List<String> listOfString = new ArrayList<>();
 
-        ///////////////////2///////////////////////
-        System.out.println(list.stream().map(Object::toString).filter(x -> x.equals("100")).findAny().orElse("Число не найдено"));
-
-
-        ///////////////////3///////////////////////
-        System.out.println(list.stream().map(Object::toString).filter(x -> x.equals("100")).findFirst().orElse("Число не найдено"));
-
-
-        ///////////////////4///////////////////////
-        List <String> listOfString = new ArrayList<>();
-
-        for(int i = 0; i < 100; i ++){
+        for (int i = 0; i < 100; i++) {
             listOfString.add(UUID.randomUUID().toString());
         }
 
+        return listOfString.stream().filter(x -> x.contains("a")).collect(Collectors.toList());
+    }
 
-        listOfString.stream().filter(x -> x.indexOf('a') != -1).forEach(System.out::println);
-
-        ///////////////////5///////////////////////
-
+    public static int doFifth() {
+        Random rnd = new Random();
         List<Boolean> booleanList = new ArrayList<>();
 
-        for(int i = 0; i < 100; i ++){
-
+        for (int i = 0; i < 100; i++) {
             booleanList.add(rnd.nextBoolean());
         }
 
-        System.out.println(booleanList.stream().filter(x -> x).count());
+        return (int) booleanList.stream().filter(x -> x).count();
 
+    }
 
- }
+    public static void main(String[] args) {
+
+        Random rnd = new Random();
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            list.add(rnd.nextInt(1001));
+        }
+
+        System.out.println(doFirst(list));
+        doSecond(list);
+        doThird(list);
+        System.out.println(doFourth());
+        System.out.println(doFifth());
+
+    }
 
 }
