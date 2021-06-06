@@ -13,55 +13,9 @@ package day1;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class DoWork {
-    public static List<Integer> doFirst(List<Integer> list) {
-
-        return list.stream().filter(x -> x % 5 == 0).collect(Collectors.toList());
-    }
-
-    public static void doSecond(List<Integer> list) {
-
-        Optional<Integer> optional = list.stream().filter(x -> x == 100).findAny();
-
-        if (optional.isEmpty()) {
-            System.out.println("Число не найдено");
-        }
-    }
-
-    public static void doThird(List<Integer> list) {
-
-        Optional<Integer> optional = list.stream().filter(x -> x == 100).findFirst();
-
-        if (optional.isEmpty()) {
-            System.out.println("Число не найдено");
-        }
-
-    }
-
-    public static List<String> doFourth() {
-        List<String> listOfString = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            listOfString.add(UUID.randomUUID().toString());
-        }
-
-        return listOfString.stream().filter(x -> x.contains("a")).collect(Collectors.toList());
-    }
-
-    public static int doFifth() {
-        Random rnd = new Random();
-        List<Boolean> booleanList = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            booleanList.add(rnd.nextBoolean());
-        }
-
-        return (int) booleanList.stream().filter(x -> x).count();
-
-    }
+public class StreamTasks {
 
     public static void main(String[] args) {
-
         Random rnd = new Random();
         List<Integer> list = new ArrayList<>();
 
@@ -73,8 +27,47 @@ public class DoWork {
         doSecond(list);
         doThird(list);
         System.out.println(doFourth());
-        System.out.println(doFifth());
+        System.out.println(doFifth(rnd));
+    }
 
+    private static List<Integer> doFirst(List<Integer> list) {
+        return list.stream().filter(x -> x % 5 == 0).collect(Collectors.toList());
+    }
+
+    private static void doSecond(List<Integer> list) {
+        Optional<Integer> optional = list.stream().filter(x -> x == 100).findAny();
+
+        if (optional.isEmpty()) {
+            System.out.println("Число не найдено");
+        }
+    }
+
+    private static void doThird(List<Integer> list) {
+        Optional<Integer> optional = list.stream().filter(x -> x == 100).findFirst();
+
+        if (optional.isEmpty()) {
+            System.out.println("Число не найдено");
+        }
+    }
+
+    private static List<String> doFourth() {
+        List<String> listOfString = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            listOfString.add(UUID.randomUUID().toString());
+        }
+
+        return listOfString.stream().filter(x -> x.contains("a")).collect(Collectors.toList());
+    }
+
+    private static long doFifth(Random rnd) {
+        List<Boolean> booleanList = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            booleanList.add(rnd.nextBoolean());
+        }
+
+        return booleanList.stream().filter(x -> x).count();
     }
 
 }
