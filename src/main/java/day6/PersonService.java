@@ -29,49 +29,47 @@ public class PersonService {
     }
 
     private List<Person> getSortedListByNames() {
-        return personList.stream().sorted(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        }).collect(Collectors.toList());
+        Comparator<Person> comparator = Comparator.comparing(Person::getName);
+        return personList.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 
     private List<Person> getSortedListBySurnames() {
-        return personList.stream().sorted(Comparator.comparing(Person::getSurname)).collect(Collectors.toList());
+        Comparator<Person> comparator = Comparator.comparing(Person::getSurname);
+        return personList.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 
     private List<Person> getSortedListByAges() {
-        return personList.stream().sorted(Comparator.comparing(Person::getAge)).collect(Collectors.toList());
+        Comparator<Person> comparator = Comparator.comparing(Person::getAge);
+        return personList.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
     }
 
     private List<Person> getSortedListBySurnamesAndNames() {
-        return personList.stream().sorted((o1, o2) -> {
-            if (o1.getSurname().equals(o2.getSurname())) {
-                return o1.getName().compareTo(o2.getName());
-            } else {
-                return o1.getSurname().compareTo(o2.getSurname());
-            }
-        }).collect(Collectors.toList());
+        Comparator<Person> firstComparator = Comparator.comparing(Person::getSurname);
+        Comparator<Person> secondComparator = Comparator.comparing(Person::getName);
+        return personList.stream()
+                .sorted(secondComparator.thenComparing(firstComparator))
+                .collect(Collectors.toList());
     }
 
     private List<Person> getSortedListByNamesAndAges() {
-        return personList.stream().sorted((o1, o2) -> {
-            if (o1.getName().equals(o2.getName())) {
-                return o1.getAge().compareTo(o2.getAge());
-            } else {
-                return o1.getName().compareTo(o2.getName());
-            }
-        }).collect(Collectors.toList());
+        Comparator<Person> firstComparator = Comparator.comparing(Person::getName);
+        Comparator<Person> secondComparator = Comparator.comparing(Person::getAge);
+        return personList.stream()
+                .sorted(secondComparator.thenComparing(firstComparator))
+                .collect(Collectors.toList());
     }
 
     private List<Person> getSortedListBySuramesAndAges() {
-        return personList.stream().sorted(((Comparator<Person>) (o1, o2) -> {
-            if (o1.getSurname().equals(o2.getSurname())) {
-                return o1.getAge().compareTo(o2.getAge());
-            } else {
-                return o1.getSurname().compareTo(o2.getSurname());
-            }
-        }).reversed()).collect(Collectors.toList());
+        Comparator<Person> firstComparator = Comparator.comparing(Person::getSurname);
+        Comparator<Person> secondComparator = Comparator.comparing(Person::getAge);
+        return personList.stream()
+                .sorted(secondComparator.reversed().thenComparing(firstComparator.reversed()))
+                .collect(Collectors.toList());
     }
 }
